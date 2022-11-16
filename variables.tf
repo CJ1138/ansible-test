@@ -1,13 +1,7 @@
 variable "project" {}
-variable "vm1_name" {}
-variable "vm2_name" {}
 variable "machine_type" {}
 variable "region" {}
 variable "zone" {}
 variable "network" {}
 variable "subnet" {}
 variable "cidr_range" {}
-variable "ip1" {}
-variable "ip2" {}
-variable "service_account1_name" {}
-variable "service_account2_name" {}

@@ -17,7 +17,7 @@ resource "google_compute_firewall" "http" {
 
   allow {
     protocol = "tcp"
-    ports    = ["80"]
+    ports    = ["80","8000"]
   }
 
   target_tags   = ["http-server"]
@@ -30,7 +30,7 @@ resource "google_compute_firewall" "https" {
 
   allow {
     protocol = "tcp"
-    ports    = ["443"]
+    ports    = ["443","4443"]
   }
 
   target_tags   = ["http-server"]
@@ -58,14 +58,25 @@ resource "google_compute_firewall" "internal" {
     ports    = ["0-65535"]
   }
 
-   allow {
+  allow {
     protocol = "udp"
     ports    = ["0-65535"]
   }
 
-   allow {
+  allow {
     protocol = "icmp"
   }
 
-  source_ranges = ["10.128.0.0/9"]
+  source_ranges = ["10.0.0.0/24"]
+}
+
+resource "google_compute_firewall" "icmp" {
+  name    = "custom-allow-icmp"
+  network = google_compute_network.vpc_network.id
+
+  allow {
+    protocol = "icmp"
+  }
+
+  source_ranges = ["0.0.0.0/0"]
 }

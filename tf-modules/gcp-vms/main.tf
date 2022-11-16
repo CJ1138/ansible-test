@@ -5,6 +5,8 @@ resource "google_compute_instance" "server-vm" {
 
   tags = ["http-server", "https-server", "allow-health-check"]
 
+  allow_stopping_for_update = true
+
   boot_disk {
     initialize_params {
       size  = 10
@@ -12,10 +14,14 @@ resource "google_compute_instance" "server-vm" {
     }
   }
 
+      metadata = {
+        ssh-keys = "chris:${file("~/.ssh/anstest.pub")}"
+    }   
+
   network_interface {
-    subnetwork = var.subnet
+    subnetwork = "default"
     access_config {
-        nat_ip = var.ip_address
+      nat_ip = var.ip_address
     }
   }
 
